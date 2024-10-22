@@ -21,11 +21,6 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
 			this.snow();
 			Lampa.Settings.main().render().find('[data-component="plugins"]').unbind('hover:enter').on('hover:enter', function () {
         Lampa.Extensions.show();
-        setTimeout(function (){
-          $('.extensions__item-author', Lampa.Extensions.render()).map(function (i, e){
-            if(e.textContent == '@modss_group') $(e).html('💎').append('<span class="extensions__item-premium">VIP buy at @modssmy_bot</span>');
-          });
-        }, 500);
       });
       if (Lampa.Storage.field('mods_tv_butt_ch')) Lampa.Keypad.listener.follow('keydown', function (e) {
     		var next = (e.code == 427 || e.code == 33 || e.code == 39);
@@ -51,27 +46,9 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
   			};
   		}
   		if(!IP) this.getIp();
-  		var ads_4k = ['<div class="ad-server" style="margin: 1em 1em;">','<div class="ad-server__text"><b>Надоело смотреть в плохом качестве?</b><br>Хочешь смотреть в <b style="color: #ffd402;">FHD</b> и <b style="color: #ffd402;">4K</b>? Сканируй код и подключай <b style="color: #02ff60;">Vip</b></div><img src="http://lampa.stream/qr_bot.png" class="ad-server__qr">','</div>'].join('');
-    	Lampa.Controller.listener.follow('toggle', function(e) {
-    		if(e.name == 'select' && !vip) {
-    			setTimeout(function() {
-    				if($('.selectbox .scroll__body div:eq(0)').html() && $('.selectbox .scroll__body div:eq(0)').html().indexOf('.land') >= 0) $('.selectbox .scroll__body div:eq(0)').remove();
-    				if($('.selectbox .selectbox-item__icon svg').length && Lampa.Activity.active().component == 'full') $('.selectbox .scroll__body').prepend($(ads_4k));
-    			}, 10);
-    		}
-    	});
     	var mynotice = new Lampa.NoticeClassLampa({name: 'Modss',db_name: 'notice_modss'});
       Lampa.Notice.addClass('modss', mynotice);
 
-      if(!logged && vip) 
-      setTimeout(function() {
-        Modss.auth();
-      }, 100);
-
-      if(Lampa.Storage.get('showModssVip', false) && leftVipD && vip && logged) setTimeout(function (){
-        Modss.showModssVip();
-        Lampa.Storage.set('showModssVip', false);
-      }, 5000);
       
       setTimeout(function() {
         var m_reload = '<div id="MRELOAD" class="head__action selector m-reload-screen"><svg fill="#ffffff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" stroke-width="0.4800000000000001"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M4,12a1,1,0,0,1-2,0A9.983,9.983,0,0,1,18.242,4.206V2.758a1,1,0,1,1,2,0v4a1,1,0,0,1-1,1h-4a1,1,0,0,1,0-2h1.743A7.986,7.986,0,0,0,4,12Zm17-1a1,1,0,0,0-1,1A7.986,7.986,0,0,1,7.015,18.242H8.757a1,1,0,1,0,0-2h-4a1,1,0,0,0-1,1v4a1,1,0,0,0,2,0V19.794A9.984,9.984,0,0,0,22,12,1,1,0,0,0,21,11Z" fill="currentColor"></path></g></svg></div>';
@@ -129,23 +106,6 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
 
       Lampa.Params.select('source', sources, 'tmdb');
 		},
-		showModssVip: function () {
-      var enabled = Lampa.Controller.enabled().name;
-      Lampa.Modal.open({
-        title: '',
-        html: Lampa.Template.get('cub_premium'),
-        onBack: function onBack() {
-          Lampa.Modal.close();
-          Lampa.Controller.toggle(enabled);
-        }
-      });
-      Lampa.Modal.render().find('.cub-premium__title').text("MODS's VIP");
-      Lampa.Modal.render().find('.cub-premium__descr:eq(0)').text('Поздравляем вас с получением VIP-статуса! Теперь у вас есть возможность наслаждаться видео в высоком разрешении 4К. Кроме того, вас ожидают дополнительные балансеры, которые помогут найти подходящий контент');
-      Lampa.Modal.render().find('.cub-premium__descr:eq(1)').text('У вас осталось ' + leftVipD);
-      Lampa.Modal.render().find('.cub-premium__descr:eq(1)').after('<div class="cub-premium__descr"><h3>👇 Кнопка для просмотра 👇</h3><img src="http://lampa.stream/but_modss.png"></div>');
-      Lampa.Modal.render().find('.cub-premium__url').text('@modssmy_bot');
-      Lampa.Modal.render().addClass('modal--cub-premium').find('.modal__content').before('<div class="modal__icon"><svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 32 32"><path d="m2.837 20.977q-.912-5.931-1.825-11.862a.99.99 0 0 1 1.572-.942l5.686 4.264a1.358 1.358 0 0 0 1.945-.333l4.734-7.104a1.263 1.263 0 0 1 2.1 0l4.734 7.1a1.358 1.358 0 0 0 1.945.333l5.686-4.264a.99.99 0 0 1 1.572.942q-.913 5.931-1.825 11.862z" fill="#D8C39A"></svg></div>');
-    },
 		online: function (back) {
       
 	var params = {
@@ -429,13 +389,9 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
   				var imdb = json.data && json.data.imdb_rating || 0;
   				var auth = json.data.auth;
   				
-          if((!vip && logged == 'false' && leftVipD !== json.data.leftDays && auth && json.data.vip) || (vip && logged == true && leftVipD !== json.data.leftDays && auth=='false' && !json.data.vip)) window.location.reload();
+          Lampa.Storage.set('showModssVip', true);
 
-  				if(json.data.leftDays) leftVipD = json.data.leftDays;
-  				if(!vip) Lampa.Storage.set('showModssVip', true);
-
-          if(json.data.block_ip || !ping_auth && auth == 'pending' || auth && json.data.block || auth == 'true' && !json.data.vip) Modss.auth(true);
-          vip = json.data.vip;
+          Modss.auth(true);
 
           var kp_rating = !isNaN(kp) && kp !== null ? parseFloat(kp).toFixed(1) : '0.0';
   				var imdb_rating = !isNaN(imdb) && imdb !== null ? parseFloat(imdb).toFixed(1) : '0.0';
@@ -4667,17 +4623,14 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
   		
   		filter.set('filter', select);
       filter.set('sort', filter_sources.map(function (e, i) {
-        var vip =  true;
         var tpl = {
-				  title: vip ? balansers[e] : balansers[e].split(' ')[0],
+				  title:balansers[e],
           source: e,
           selected: e == balanser, 
-          ghost: vip
+          ghost: true
         };
-        if(vip) {
-          tpl.template = 'selectbox_icon';
-          tpl.icon = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="512" height="512" viewBox="0 0 401.998 401.998" xml:space="preserve"><path d="M357.45 190.721c-5.331-5.33-11.8-7.993-19.417-7.993h-9.131v-54.821c0-35.022-12.559-65.093-37.685-90.218C266.093 12.563 236.025 0 200.998 0c-35.026 0-65.1 12.563-90.222 37.688-25.126 25.126-37.685 55.196-37.685 90.219v54.821h-9.135c-7.611 0-14.084 2.663-19.414 7.993-5.33 5.326-7.994 11.799-7.994 19.417V374.59c0 7.611 2.665 14.086 7.994 19.417 5.33 5.325 11.803 7.991 19.414 7.991H338.04c7.617 0 14.085-2.663 19.417-7.991 5.325-5.331 7.994-11.806 7.994-19.417V210.135c.004-7.612-2.669-14.084-8.001-19.414zm-83.363-7.993H127.909v-54.821c0-20.175 7.139-37.402 21.414-51.675 14.277-14.275 31.501-21.411 51.678-21.411 20.179 0 37.399 7.135 51.677 21.411 14.271 14.272 21.409 31.5 21.409 51.675v54.821z" fill="currentColor"></path></svg>'
-        };
+        tpl.template = 'selectbox_icon';
+        tpl.icon = '<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="512" height="512" viewBox="0 0 401.998 401.998" xml:space="preserve"><path d="M357.45 190.721c-5.331-5.33-11.8-7.993-19.417-7.993h-9.131v-54.821c0-35.022-12.559-65.093-37.685-90.218C266.093 12.563 236.025 0 200.998 0c-35.026 0-65.1 12.563-90.222 37.688-25.126 25.126-37.685 55.196-37.685 90.219v54.821h-9.135c-7.611 0-14.084 2.663-19.414 7.993-5.33 5.326-7.994 11.799-7.994 19.417V374.59c0 7.611 2.665 14.086 7.994 19.417 5.33 5.325 11.803 7.991 19.414 7.991H338.04c7.617 0 14.085-2.663 19.417-7.991 5.325-5.331 7.994-11.806 7.994-19.417V210.135c.004-7.612-2.669-14.084-8.001-19.414zm-83.363-7.993H127.909v-54.821c0-20.175 7.139-37.402 21.414-51.675 14.277-14.275 31.501-21.411 51.678-21.411 20.179 0 37.399 7.135 51.677 21.411 14.271 14.272 21.409 31.5 21.409 51.675v54.821z" fill="currentColor"></path></svg>'
         return tpl;
       }));
       
