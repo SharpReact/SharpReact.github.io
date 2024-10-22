@@ -4669,7 +4669,7 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
   		
   		filter.set('filter', select);
       filter.set('sort', filter_sources.map(function (e, i) {
-        var vip = i >= (Lampa.Storage.get('pro_pub', false) ? 5 : 4) ? true : false;
+        var vip =  true;
         var tpl = {
 				  title: vip ? balansers[e] : balansers[e].split(' ')[0],
           source: e,
