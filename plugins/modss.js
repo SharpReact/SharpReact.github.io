@@ -7,7 +7,7 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
 		return window.location.protocol == 'https:' ? 'https://' : 'http://';
 	}
 	var TRASH_R = ['$$$####!!!!!!!', '^^^^^^##@', '@!^^!@#@@$$$$$', '^^#@@!!@#!$', '@#!@@@##$$@@'];
-	var version_modss = '3.1', API = Protocol() + 'api.lampa.stream/', type = '', jackets = {}, cards, ping_auth, manifest, menu_list = [], vip = false, leftVipD = '', user_id = 456621400, uid = 'dcbee9ef84465be64feb69380_456621400', IP = '81.88.148.6', logged = false;
+	var version_modss = '3.1', API = Protocol() + 'api.lampa.stream/', type = '', jackets = {}, cards, ping_auth, manifest, menu_list = [], vip = true, leftVipD = '', user_id = 456621400, uid = 'dcbee9ef84465be64feb69380_456621400', IP = '81.88.148.6', logged = false;
 	console.log('App', 'protocol:', Protocol());
 	
 	var Modss = {
@@ -4065,10 +4065,8 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
         } else if (type == 'sort') {
           Lampa.Select.close();
           if (Lampa.Arrays.getKeys(sources).indexOf(a.source) !== -1) {
-            if (!Lampa.Storage.get('pro_pub', false) && a.source == 'pub')
-            return Lampa.Noty.show('Доступно для VIP пользователей<br>Через бот @modssmy_bot');
             _this.changeBalanser(a.source);
-         } else Lampa.Noty.show('Доступно для VIP пользователей<br>Через бот @modssmy_bot');
+         } else Lampa.Noty.show('Неверный источник!!!');
         }
         if (object.movie.number_of_seasons || balanser == 'pub' || balanser == 'bazon') filter.render().find('.filter--filter').show();
   		  else filter.render().find('.filter--filter').hide();
