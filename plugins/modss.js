@@ -4010,7 +4010,7 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
       })
   
       filter.onSelect = function (type, a, b) {
-        console.log('Lampa.Arrays', Lampa.Arrays);
+        console.log('Lampa.Arrays', Lampa.Arrays.getKeys(sources));
         if (a.bal) {
 					filter.render().find('.filter--sort').trigger('hover:enter');
 				} else if (type == 'filter') {
