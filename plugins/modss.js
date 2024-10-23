@@ -3947,6 +3947,7 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
       })
   
       filter.onSelect = function (type, a, b) {
+        console.log('balancer:', a)
         if (a.bal) {
 					filter.render().find('.filter--sort').trigger('hover:enter');
 				} else if (type == 'filter') {
