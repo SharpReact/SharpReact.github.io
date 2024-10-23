@@ -10358,7 +10358,7 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
 					description: Lampa.Lang.translate('online_proxy_descr')
 				}
 			});
-			['VideoCDN', 'Kinobase', 'Collaps', ''].forEach(function (itm) {
+			['VideoCDN', 'Kinobase', 'Collaps', 'HDRezka'].forEach(function (itm) {
 				Lampa.SettingsApi.addParam({
 					component: 'mods_proxy',
 					param: {
