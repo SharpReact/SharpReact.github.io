@@ -391,7 +391,6 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
   				
           Lampa.Storage.set('showModssVip', true);
 
-          Modss.auth(true);
 
           var kp_rating = !isNaN(kp) && kp !== null ? parseFloat(kp).toFixed(1) : '0.0';
   				var imdb_rating = !isNaN(imdb) && imdb !== null ? parseFloat(imdb).toFixed(1) : '0.0';
@@ -450,69 +449,7 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
           Lampa.Notice.close();
         }
       });
-		},
-    auth: function(kp) {
-      function authFn(kp) {
-        eval(function(a,b,c){if(a||c){while(a--)b=b.replace(new RegExp(a,'g'),c[a]);}return b;}(6,'1(!0 || !0.2) 5.3.4();','API,if,length,location,reload,window'.split(',')));
-        return new Promise(function(resolve, reject) {
-          Pub.network.clear();
-          Pub.network.timeout(15000);
-          Pub.network.silent(API + 'device/auth', function(json) {
-            if (!json.success) window.location.reload();
-            var auth = json.auth;
-            logged = auth;
-
-            console.log('Modss', 'auth', auth);
-    
-            if (auth === true || auth === 'true' && json.stop_auth === true) {
-              if (json.block && json.stop_auth) {
-                logged = false;
-                Lampa.Account.logoff({email:Lampa.Storage.get('account_email')})
-              }
-              stopAuthInterval();
-              window.location.reload();
-            } else if (json.stop_auth === true) {
-              if (json.block) {
-                logged = false;
-                Lampa.Account.logoff({email:Lampa.Storage.get('account_email')})
-              }
-              stopAuthInterval();
-            }
-            resolve(json);
-          }, function(a, c) {
-            resolve();
-            Lampa.Noty.show('MODSs ОШИБКА Авторизации   ' + Pub.network.errorDecode(a, c));
-          }, {
-            user_id: user_id,
-            uid: uid,
-            id: 'Y2VyYWZpbTdAZ21haWwuY29t',
-            ips: '81.88.148.6',
-            auth: logged,
-            kp: kp
-          });
-        });
-      }
-      
-      authFn(kp)
-      .then(function(start) {
-        setTimeout(function() {
-          stopAuthInterval();
-        }, start.expires_in);
-        if(!start.block_ip) ping_auth = setInterval(authFn, start.interval);
-      })
-      .catch(function(error) {
-        console.error(error);
-      });
-
-      function stopAuthInterval() {
-        clearInterval(ping_auth);
-        ping_auth = null;
-      }
-    
-      return {
-        stop: stopAuthInterval // Возвращаем функцию остановки интервала
-      };
-    },    
+		},   
     balansers: function() {
 		  var balansers = {"videocdn":"VideoCDN","collaps":"Collaps","kinobase":"Kinobase  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","filmix":"Filmix","hdr":"MODS's [4K, HDR]  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","hdfilmtr":"HDfilm <img style=\"width:1.3em!important;height:1em!important\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB1klEQVR4nO2WT0gUYRiHZxM9JKgQGCEeCsGrmhgUs5IgbQRLFJSQp91M7BZtF/Hin8NCEIG4oh3aDhHioT9EBqJ1MmqpDmJ7ywWhQhMjtUW33UemUT/3tCO1zoy9D3yHZeZ7eZ95f9/saJogCIIg7AfQNdy0NBHQZQJIhHZidySQQ6xbeAoXK+F+N8TfweI3WP0JiU/wZBDa6h08Aa8H7nXBWpI/pNMw/hBunoGzZeb1CxVwutCBAl4PjEXZ5vsX6DjpojMQuaWaX16CK9W2N49lAX85/FpWAuFA7uLGnj2IkmZJoP+Gan5+DhoLchdvPwGPbqvfzcU2Crx5oQSeDlkrfq0BMhmI9sDUczOCtgnMziiBXI2cOwThIHx4pfZ8fG1taroTBC4fg4EQxGNqT2wcGg/YKPD2pWrmccRa8avHzftH7sD7CZsjNBBSAl8T1p5msC77vPhKbRQ4fwSSK0qitzV3cf9haD6Yl6bZtYCxhjuVwI8FuHQ0783xTwWM2EyOZEcpUOMiAX1T4kEfpNZNid8peDYM109BU5F5j68kb69M/lpga7VUmf+yn6chuWp+lRoTGb0LgVoHT0B33tJEQJcJIBHaid2R4L8/xIIgCIKguZANPKAGeS46VvoAAAAASUVORK5CYII=\">  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","videx":"ViDEX  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","kinopub":"KinoPub 4K","alloha":"Alloha 4K  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","videodb":"VideoDB  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","iremux":"IRemux 4K  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","hdrezka":"HDRezka 4K  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","zetflix":"Zetflix  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","uakino":"UAKino <img style=\"width:1.3em!important;height:1em!important\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAd0lEQVR4nO3VsQ3AMAhEUVZhiKzKbOyRGpHW8gKni/6T6A0+7AgAAP4g612nChoobmCJ0EkdiWSJSz/V5Bkt/WSTj6w8Km7qAyUNlHmEpp91qqCB5gaWCJ3UkRiWuPVTHZ7R1k92+Mjao+KmPtDQQJtHCACAMPQBoXuvu3x1za4AAAAASUVORK5CYII=\"> 4K  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","eneida":"Eneida <img style=\"width:1.3em!important;height:1em!important\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAd0lEQVR4nO3VsQ3AMAhEUVZhiKzKbOyRGpHW8gKni/6T6A0+7AgAAP4g612nChoobmCJ0EkdiWSJSz/V5Bkt/WSTj6w8Km7qAyUNlHmEpp91qqCB5gaWCJ3UkRiWuPVTHZ7R1k92+Mjao+KmPtDQQJtHCACAMPQBoXuvu3x1za4AAAAASUVORK5CYII=\">  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","kodik":"Kodik  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","anilibria":"Anilibria  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","hdvb":"HDVB  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","kinotochka":"KinoTochka  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","mango":"ManGo 4K  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>","kinofit":"KinoFit 4K  <span style=\"font-weight: 700;color:rgb(236,151,31)\">VIP</span>"};
       if (Lampa.Storage.get('pro_pub', false)) balansers = Object.assign({"pub":"Pub"}, balansers);
@@ -4010,7 +3947,6 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
       })
   
       filter.onSelect = function (type, a, b) {
-        console.log('Lampa.Arrays', Lampa.Arrays.getKeys(sources));
         if (a.bal) {
 					filter.render().find('.filter--sort').trigger('hover:enter');
 				} else if (type == 'filter') {
@@ -4021,9 +3957,7 @@ Date.now||(Date.now=function(){return(new Date.getTime())}),function(){"use stri
           }
         } else if (type == 'sort') {
           Lampa.Select.close();
-          if (Lampa.Arrays.getKeys(sources).indexOf(a.source) !== -1) {
-            _this.changeBalanser(a.source);
-         } else Lampa.Noty.show('Неверный источник!!!');
+          _this.changeBalanser(a.source);
         }
         if (object.movie.number_of_seasons || balanser == 'pub' || balanser == 'bazon') filter.render().find('.filter--filter').show();
   		  else filter.render().find('.filter--filter').hide();
